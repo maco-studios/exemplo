@@ -17,6 +17,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Column(name = "firstname", nullable = false)
     private String firstname;
 
@@ -25,6 +28,10 @@ public class Usuario {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "password", nullable = false)
+    @JsonIgnore
+    private String password;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -45,19 +52,23 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String firstname, String lastname, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Usuario(Long id, String username, String firstname, String lastname, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public Usuario(String firstname, String lastname, String email) {
+    public Usuario(String username, String firstname, String lastname, String email, String password) {
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
     }
 
     public Set<Cargo> getCargos() {
@@ -74,6 +85,14 @@ public class Usuario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstname() {
@@ -98,6 +117,14 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedAt() {

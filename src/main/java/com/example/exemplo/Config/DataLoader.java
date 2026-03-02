@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * DataLoader - Carrega dados iniciais no banco de dados
@@ -25,7 +26,8 @@ public class DataLoader {
     public CommandLineRunner loadData(
             UsuarioRepository usuarioRepository,
             CargoRepository cargoRepository,
-            PostRepository postRepository) {
+            PostRepository postRepository,
+            PasswordEncoder passwordEncoder) {
         return args -> {
             // Verifica se já existem dados para evitar duplicação
             if (usuarioRepository.count() > 0) {
@@ -46,10 +48,10 @@ public class DataLoader {
 
             System.out.println("✅ Cargos criados");
 
-            // Criar usuários
-            Usuario usuario1 = new Usuario("João", "Silva", "joao.silva@example.com");
-            Usuario usuario2 = new Usuario("Maria", "Santos", "maria.santos@example.com");
-            Usuario usuario3 = new Usuario("Pedro", "Oliveira", "pedro.oliveira@example.com");
+            // Criar usuários com username e password
+            Usuario usuario1 = new Usuario("joao.silva", "João", "Silva", "joao.silva@example.com", passwordEncoder.encode("password"));
+            Usuario usuario2 = new Usuario("maria.santos", "Maria", "Santos", "maria.santos@example.com", passwordEncoder.encode("password"));
+            Usuario usuario3 = new Usuario("pedro.oliveira", "Pedro", "Oliveira", "pedro.oliveira@example.com", passwordEncoder.encode("password"));
 
             usuario1.getCargos().add(cargoAdmin);
             usuario2.getCargos().add(cargoUser);
