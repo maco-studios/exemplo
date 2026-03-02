@@ -12,7 +12,7 @@ CREATE TABLE client_credentials (
     created_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_modified_date TIMESTAMP,
     description VARCHAR(1000),
-    
+
     INDEX idx_client_id (client_id),
     INDEX idx_active (active)
 );
