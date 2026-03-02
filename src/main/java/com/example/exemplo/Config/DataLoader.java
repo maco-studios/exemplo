@@ -1,8 +1,10 @@
 package com.example.exemplo.Config;
 
+import com.example.exemplo.Model.ApiKey;
 import com.example.exemplo.Model.Cargo;
 import com.example.exemplo.Model.Post;
 import com.example.exemplo.Model.Usuario;
+import com.example.exemplo.Model.Repository.ApiKeyRepository;
 import com.example.exemplo.Model.Repository.CargoRepository;
 import com.example.exemplo.Model.Repository.PostRepository;
 import com.example.exemplo.Model.Repository.UsuarioRepository;
@@ -25,7 +27,8 @@ public class DataLoader {
     public CommandLineRunner loadData(
             UsuarioRepository usuarioRepository,
             CargoRepository cargoRepository,
-            PostRepository postRepository) {
+            PostRepository postRepository,
+            ApiKeyRepository apiKeyRepository) {
         return args -> {
             // Verifica se já existem dados para evitar duplicação
             if (usuarioRepository.count() > 0) {
@@ -85,6 +88,17 @@ public class DataLoader {
             postRepository.save(post3);
 
             System.out.println("✅ Posts criados");
+
+            // Criar API Keys
+            ApiKey apiKey1 = new ApiKey("sk-example-key-12345", "Example API Key");
+            ApiKey apiKey2 = new ApiKey("sk-test-key-67890", "Test API Key");
+
+            apiKeyRepository.save(apiKey1);
+            apiKeyRepository.save(apiKey2);
+
+            System.out.println("✅ API Keys criadas");
+            System.out.println("   - sk-example-key-12345 (Example API Key)");
+            System.out.println("   - sk-test-key-67890 (Test API Key)");
 
             System.out.println("✨ Inicialização concluída com sucesso!");
         };
