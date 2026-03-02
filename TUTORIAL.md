@@ -27,7 +27,7 @@ HMAC (Hash-based Message Authentication Code) é um mecanismo de **autenticaçã
 
 ```
 Cliente ─────────────> [Assinatura HMAC] ─────────────> Servidor
-                       
+
    Mensagem "Olá"    HMAC-SHA256("Olá", minha_chave_secreta)
                      ────────────────────────────────────────────
                      Resultado: assinatura_criptografada_aqui...
@@ -44,11 +44,11 @@ Cliente ─────────────> [Assinatura HMAC] ────�
 
 ### Vantagens do HMAC
 
-✅ **Simples** - Fácil de implementar  
-✅ **Rápido** - Sem overhead de roundtrips  
-✅ **Seguro** - Usa criptografia SHA-256  
-✅ **Stateless** - Cada requisição é independente  
-✅ **Escalável** - Funciona em microserviços  
+✅ **Simples** - Fácil de implementar
+✅ **Rápido** - Sem overhead de roundtrips
+✅ **Seguro** - Usa criptografia SHA-256
+✅ **Stateless** - Cada requisição é independente
+✅ **Escalável** - Funciona em microserviços
 
 ---
 
@@ -333,7 +333,7 @@ public class HmacSignatureUtil {
         }
     }
 
-    public static boolean validateSignature(String content, String secret, 
+    public static boolean validateSignature(String content, String secret,
                                            String providedSignature) {
         String calculatedSignature = generateSignature(content, secret);
         return constantTimeEquals(calculatedSignature, providedSignature);
@@ -469,8 +469,8 @@ public class HmacAuthenticationProvider implements AuthenticationProvider {
                     "Cliente não encontrado ou inativo: " + clientId
                 ));
 
-        if (!HmacSignatureUtil.validateSignature(requestContent, 
-                                                  credentials.getClientSecret(), 
+        if (!HmacSignatureUtil.validateSignature(requestContent,
+                                                  credentials.getClientSecret(),
                                                   providedSignature)) {
             throw new HmacAuthenticationException(
                 "Assinatura HMAC inválida para cliente: " + clientId
@@ -511,8 +511,8 @@ public class HmacAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                   HttpServletResponse response, 
+    protected void doFilterInternal(HttpServletRequest request,
+                                   HttpServletResponse response,
                                    FilterChain filterChain) {
         try {
             String authHeader = request.getHeader(AUTHORIZATION_HEADER);
@@ -552,7 +552,7 @@ public class HmacAuthenticationFilter extends OncePerRequestFilter {
         return new String(request.getInputStream().readAllBytes());
     }
 
-    private void handleAuthenticationError(HttpServletResponse response, String message) 
+    private void handleAuthenticationError(HttpServletResponse response, String message)
             throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
@@ -592,8 +592,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public DefaultSecurityFilterChain filterChain(HttpSecurity http, 
-                                                  HmacAuthenticationFilter filter) 
+    public DefaultSecurityFilterChain filterChain(HttpSecurity http,
+                                                  HmacAuthenticationFilter filter)
             throws Exception {
         http
             .csrf().disable()
@@ -814,7 +814,7 @@ axios.get(`${BASE_URL}/api/clients/test`, {
 // POST
 const body = JSON.stringify({name: "João", email: "joao@test.com"});
 const signature = generateSignature(body);
-axios.post(`${BASE_URL}/api/usuarios`, 
+axios.post(`${BASE_URL}/api/usuarios`,
     JSON.parse(body),
     {
         headers: {
@@ -929,14 +929,14 @@ Resultado: 401 Unauthorized
 
 ### Boas Práticas
 
-✅ **Use HTTPS/TLS 1.3** em produção  
-✅ **Nunca commite secrets** no repositório  
-✅ **Use variáveis de ambiente** para secrets  
-✅ **Rotacione secrets** periodicamente  
-✅ **Monitore tentativas falhadas** de autenticação  
-✅ **Implemente rate limiting** para evitar força bruta  
-✅ **Registre todos os acessos** (audit log)  
-✅ **Disative clientes** quando não mais precisar  
+✅ **Use HTTPS/TLS 1.3** em produção
+✅ **Nunca commite secrets** no repositório
+✅ **Use variáveis de ambiente** para secrets
+✅ **Rotacione secrets** periodicamente
+✅ **Monitore tentativas falhadas** de autenticação
+✅ **Implemente rate limiting** para evitar força bruta
+✅ **Registre todos os acessos** (audit log)
+✅ **Disative clientes** quando não mais precisar
 
 ---
 
@@ -959,7 +959,7 @@ curl -H "Authorization: Bearer token"
 
 ### Erro 401: "Assinatura HMAC inválida"
 
-**Causa**: 
+**Causa**:
 - Chave secreta errada
 - Body foi alterado
 - Algoritmo diferente
@@ -1086,8 +1086,8 @@ brew install openssl curl
 
 ---
 
-**Versão**: 1.0  
-**Data**: 2026-03-02  
+**Versão**: 1.0
+**Data**: 2026-03-02
 **Status**: ✅ Production Ready
 
 Fim do Tutorial! 🎉
