@@ -5,6 +5,7 @@ import com.example.exemplo.Model.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,6 +19,9 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Lista todos os usuários
@@ -48,6 +52,14 @@ public class UsuarioController {
             if (existing.isPresent()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }
+        }
+
+        // Encode password if provided
+        if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        } else {
+            // Set a default password if none provided
+            usuario.setPassword(passwordEncoder.encode("senha123"));
         }
 
         Usuario saved = usuarioRepository.save(usuario);
@@ -83,6 +95,11 @@ public class UsuarioController {
         }
         if (userDetails.getLastname() != null) {
             usuario.setLastname(userDetails.getLastname());
+        }
+
+        // Encode password if provided
+        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+            usuario.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         }
 
         Usuario saved = usuarioRepository.save(usuario);

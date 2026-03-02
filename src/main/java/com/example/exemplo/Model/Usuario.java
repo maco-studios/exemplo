@@ -26,6 +26,10 @@ public class Usuario {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false)
+    @JsonIgnore
+    private String password;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -58,6 +62,13 @@ public class Usuario {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+    }
+
+    public Usuario(String firstname, String lastname, String email, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
     }
 
     public Set<Cargo> getCargos() {
@@ -114,6 +125,14 @@ public class Usuario {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
