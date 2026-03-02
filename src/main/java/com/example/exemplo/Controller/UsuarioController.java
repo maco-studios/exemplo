@@ -1,7 +1,7 @@
 package com.example.exemplo.Controller;
 
 import com.example.exemplo.Model.Usuario;
-import com.example.exemplo.Repository.UsuarioRepository;
+import com.example.exemplo.Model.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

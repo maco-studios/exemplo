@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "cargos")
 public class Cargo {
@@ -16,6 +18,7 @@ public class Cargo {
     private String name;
 
     @ManyToMany(mappedBy = "cargos")
+    @JsonIgnore
     private Set<Usuario> usuarios = new HashSet<>();
 
     public Cargo() {

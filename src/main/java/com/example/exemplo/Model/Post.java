@@ -3,11 +3,13 @@ package com.example.exemplo.Model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "posts")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
 
     @Id
@@ -22,6 +24,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cargos"})
     private Usuario author;
 
     @CreationTimestamp
