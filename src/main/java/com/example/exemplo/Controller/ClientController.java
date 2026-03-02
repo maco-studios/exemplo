@@ -52,7 +52,7 @@ public class ClientController {
     @GetMapping("/list")
     public ResponseEntity<List<Map<String, Object>>> listClients(Authentication authentication) {
         List<ClientCredentials> clients = clientService.listActiveClients();
-        
+
         List<Map<String, Object>> response = clients.stream().map(client -> {
             Map<String, Object> clientData = new HashMap<>();
             clientData.put("clientId", client.getClientId());
@@ -139,7 +139,7 @@ public class ClientController {
     @GetMapping("/test")
     public ResponseEntity<Map<String, Object>> testAuthentication(Authentication authentication) {
         String clientId = (String) authentication.getPrincipal();
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Autenticação HMAC bem-sucedida!");
         response.put("clientId", clientId);

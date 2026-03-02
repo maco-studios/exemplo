@@ -16,7 +16,7 @@ public class HmacSignatureUtil {
 
     /**
      * Gera uma assinatura HMAC-SHA256 para um conteúdo específico.
-     * 
+     *
      * @param content Conteúdo a ser assinado
      * @param secret Chave secreta para gerar a assinatura
      * @return Assinatura em Base64
@@ -25,9 +25,9 @@ public class HmacSignatureUtil {
         try {
             Mac mac = Mac.getInstance(HMAC_ALGORITHM);
             SecretKeySpec secretKey = new SecretKeySpec(
-                secret.getBytes(CHARSET), 
-                0, 
-                secret.getBytes(CHARSET).length, 
+                secret.getBytes(CHARSET),
+                0,
+                secret.getBytes(CHARSET).length,
                 HMAC_ALGORITHM
             );
             mac.init(secretKey);
@@ -40,7 +40,7 @@ public class HmacSignatureUtil {
 
     /**
      * Valida se a assinatura fornecida corresponde ao conteúdo e chave secreta.
-     * 
+     *
      * @param content Conteúdo original
      * @param secret Chave secreta
      * @param providedSignature Assinatura fornecida para validação
@@ -63,14 +63,14 @@ public class HmacSignatureUtil {
         if (a == null || b == null) {
             return a == b;
         }
-        
+
         byte[] aBytes = a.getBytes(StandardCharsets.UTF_8);
         byte[] bBytes = b.getBytes(StandardCharsets.UTF_8);
-        
+
         if (aBytes.length != bBytes.length) {
             return false;
         }
-        
+
         int result = 0;
         for (int i = 0; i < aBytes.length; i++) {
             result |= aBytes[i] ^ bBytes[i];
